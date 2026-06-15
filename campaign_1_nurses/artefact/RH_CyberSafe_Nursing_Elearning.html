@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Hospital | Cyber Security Awareness for Nurses</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --navy: #0B1F3A;
+    --teal: #028073;
+    --teal-light: #00BFA5;
+    --amber: #FFB300;
+    --red: #D32F2F;
+    --green: #2E7D32;
+    --cream: #F5F0E8;
+    --slate: #4A5568;
+    --border: rgba(0,137,123,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    background: rgba(11,31,58,0.95);
+    border-bottom: 2px solid var(--teal);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--cream); }
+  .logo-sub { font-size: 0.7rem; color: var(--teal-light); letter-spacing: 2px; text-transform: uppercase; }
+
+  .progress-bar-wrap { flex: 1; margin: 0 40px; }
+  .progress-label { font-size: 0.7rem; color: var(--teal-light); letter-spacing: 1px; margin-bottom: 4px; text-transform: uppercase; }
+  .progress-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--teal-light)); border-radius: 3px; transition: width 0.5s ease; }
+
+  .score-badge {
+    background: rgba(0,137,123,0.15);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 16px;
+    text-align: center;
+  }
+  .score-num { font-size: 1.3rem; font-weight: 600; color: var(--teal-light); }
+  .score-lbl { font-size: 0.65rem; color: var(--slate); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* MAIN */
+  main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    max-width: 760px;
+    width: 100%;
+    overflow: hidden;
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-banner {
+    padding: 28px 36px 24px;
+    background: linear-gradient(135deg, rgba(0,137,123,0.2) 0%, rgba(0,191,165,0.05) 100%);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 20px;
+  }
+  .scenario-icon { font-size: 2.8rem; line-height: 1; flex-shrink: 0; }
+  .scenario-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--teal-light); margin-bottom: 8px; }
+  .scenario-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.3; color: var(--cream); }
+
+  .card-body { padding: 32px 36px; }
+
+  .situation-box {
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #CBD5E0;
+  }
+  .situation-box strong { color: var(--cream); }
+
+  .threat-chip {
+    display: inline-block;
+    background: rgba(211,47,47,0.15);
+    border: 1px solid rgba(211,47,47,0.4);
+    color: #FC8181;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .question { font-size: 1.05rem; font-weight: 600; color: var(--cream); margin-bottom: 20px; }
+
+  .choices { display: flex; flex-direction: column; gap: 12px; }
+
+  .choice {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex; align-items: flex-start; gap: 14px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #CBD5E0;
+    text-align: left;
+  }
+  .choice:hover:not(:disabled) {
+    border-color: var(--teal);
+    background: rgba(0,137,123,0.1);
+    color: var(--cream);
+    transform: translateX(4px);
+  }
+  .choice:disabled { cursor: default; }
+  .choice.correct { border-color: var(--green); background: rgba(46,125,50,0.15); color: #A7F3A0; }
+  .choice.incorrect { border-color: var(--red); background: rgba(211,47,47,0.12); color: #FC8181; }
+  .choice.revealed { border-color: var(--green); background: rgba(46,125,50,0.08); color: #A7F3A0; }
+
+  .choice-letter {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 600;
+    flex-shrink: 0; margin-top: 1px;
+    transition: all 0.2s;
+  }
+  .choice.correct .choice-letter { background: rgba(46,125,50,0.4); border-color: var(--green); }
+  .choice.incorrect .choice-letter { background: rgba(211,47,47,0.4); border-color: var(--red); }
+  .choice.revealed .choice-letter { background: rgba(46,125,50,0.3); border-color: var(--green); }
+
+  .feedback {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadeUp 0.3s ease; }
+  .feedback.good { background: rgba(46,125,50,0.15); border: 1px solid rgba(46,125,50,0.4); color: #A7F3A0; }
+  .feedback.bad { background: rgba(211,47,47,0.12); border: 1px solid rgba(211,47,47,0.35); color: #FCA5A5; }
+
+  .feedback-title { font-weight: 600; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .feedback p { color: rgba(255,255,255,0.75); margin-top: 8px; }
+  .feedback .ref { font-size: 0.78rem; opacity: 0.7; margin-top: 10px; font-style: italic; }
+
+  .btn-next {
+    margin-top: 24px;
+    display: none;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-next.show { display: inline-flex; align-items: center; gap: 8px; animation: fadeUp 0.3s ease; }
+  .btn-next:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* THREAT BRIEFING CARD */
+  .briefing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .briefing-cell {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .briefing-cell h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--teal-light); margin-bottom: 8px; }
+  .briefing-cell p { font-size: 0.88rem; line-height: 1.6; color: #CBD5E0; }
+
+  /* RESULT SCREEN */
+  .result-screen { text-align: center; padding: 48px 36px; }
+  .result-ring {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 2.5rem;
+  }
+  .result-ring.pass { background: rgba(46,125,50,0.2); border: 3px solid var(--green); }
+  .result-ring.fail { background: rgba(211,47,47,0.15); border: 3px solid var(--red); }
+  .result-ring.mid { background: rgba(255,179,0,0.15); border: 3px solid var(--amber); }
+  .result-title { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 12px; }
+  .result-score { font-size: 3rem; font-weight: 700; color: var(--teal-light); margin: 8px 0; }
+  .result-msg { font-size: 0.95rem; color: #CBD5E0; line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
+  .result-tips { text-align: left; background: rgba(0,137,123,0.08); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-top: 24px; }
+  .result-tips h3 { color: var(--teal-light); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+  .tip-row { display: flex; gap: 12px; margin-bottom: 12px; font-size: 0.88rem; color: #CBD5E0; line-height: 1.5; }
+  .tip-icon { flex-shrink: 0; }
+  .btn-restart {
+    background: transparent;
+    border: 2px solid var(--teal);
+    color: var(--teal-light);
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .btn-restart:hover { background: rgba(0,137,123,0.15); }
+
+  /* INTRO SCREEN */
+  .intro { padding: 48px 36px; text-align: center; }
+  .intro-badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--teal-light); margin-bottom: 20px; display: block; }
+  .intro h1 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; line-height: 1.2; margin-bottom: 16px; }
+  .intro h1 em { color: var(--teal-light); font-style: normal; }
+  .intro-desc { font-size: 0.95rem; color: #CBD5E0; line-height: 1.7; max-width: 520px; margin: 0 auto 32px; }
+  .intro-meta { display: flex; justify-content: center; gap: 32px; margin-bottom: 36px; }
+  .meta-item { text-align: center; }
+  .meta-val { font-size: 1.4rem; font-weight: 700; color: var(--teal-light); }
+  .meta-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate); margin-top: 2px; }
+  .btn-start {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.5px;
+  }
+  .btn-start:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,137,123,0.3); }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  footer { text-align: center; padding: 20px; font-size: 0.75rem; color: rgba(255,255,255,0.25); border-top: 1px solid rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🏥</div>
+    <div>
+      <div class="logo-text">Royal Hospital</div>
+      <div class="logo-sub">CyberSafe Training</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label" id="prog-label">Module 1 of 5 | Scenario Training</div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div class="score-badge">
+    <div class="score-num" id="score-disp">0</div>
+    <div class="score-lbl">Score</div>
+  </div>
+</header>
+
+<main>
+  <div class="card" id="card-container"></div>
+</main>
+
+<footer>Royal Hospital | Usable Cybersecurity Module | For Training Purposes Only(Nurses) | Aligned with ISO 27001 & NIST SP 800-50</footer>
+
+<script>
+const scenarios = [
+  {
+    id: 0,
+    type: "intro"
+  },
+  {
+    id: 1,
+    icon: "📧",
+    tag: "Scenario 1 - Phishing Attack",
+    threat: "Spear-Phishing / Social Engineering",
+    title: "The Urgent Email",
+    situation: `<strong>08:47 ; Ward 4, Royal Hospital.</strong> You are Nurse Amara, starting a busy morning shift. You receive an email on your NHS workstation from <em>IT.Support@royalhospital-secure.co.uk</em> with the subject line: <strong>"URGENT: Patient record system update - action required in 2 hours or access suspended."</strong><br><br>The email asks you to click a link and re-enter your login credentials to "verify your account." A supervisor has already called in sick and you're short-staffed.`,
+    question: "What is your BEST course of action?",
+    choices: [
+      { text: "Do not click the link. Report the email to the IT Security team via the official internal reporting portal and notify your line manager.", correct: true },
+      { text: "Forward the email to a colleague to ask if they received it too, then act on their advice.", correct: false },
+      { text:  "Delete the email. If IT really needed you, they'd call you.", correct: false },
+      { text: "Click the link quickly - patient care depends on your system access and you can't risk a lockout during a busy shift.", correct: false }
+    ],
+    feedback: {
+      good: { title: "✅ Excellent Decision!", body: "Spear-phishing exploits urgency and authority are two constant pressures in nursing. NHS Digital's 2023 threat report identified phishing as the most prevalent attack vector in healthcare. Reporting through official channels allows IT to investigate and protect other staff. Time pressure is a deliberate manipulation tactic; legitimate IT teams never suspend access without prior notice .", ref: "NHS Digital, 'Cyber Threat Intelligence: Annual Report 2023.' Workman, M. (2008). Wisecrackers: A theory-grounded investigation of phishing, Social Engineering. Security Journal, 21(1-2), 131-158." },
+      bad: { title: "⚠️ Risky Choice", body: "This is a classic spear-phishing attack. The domain 'royalhospital-secure.co.uk' mimics but differs from the real hospital domain. Clicking links or sharing credentials in response to unsolicited emails is the number one entry point for ransomware. The WannaCry attack (2017) began this way, crippling 80 NHS Trusts. Urgency and authority cues are deliberate manipulation tactics identified in Cialdini's influence framework.", ref: "NHS Digital, 2023. Cialdini, R.B. (2001). Influence: Science and Practice. Allyn & Bacon." }
+    }
+  },
+  {
+    id: 2,
+    icon: "🔑",
+    tag: "Scenario 2 - Access Control",
+    threat: "Credential Sharing / Insider Risk",
+    title: "The Password Request",
+    situation: `<strong>14:15 ; Nurses' Station.</strong> Dr. Chen, a consultant you've worked with for years, approaches you. He's left his ID card in his car and needs to quickly check a patient's medication records before a procedure in 15 minutes. He asks if he can log in using <strong>your credentials</strong> - just this once. He says he'll take full responsibility.`,
+    question: "How do you respond?",
+    choices: [
+      { text: "Give him your login - you trust Dr. Chen completely and patient safety must come first.", correct: false },
+      { text: "Let him use your computer while you stay present so you can monitor exactly what he accesses.", correct: false },
+      { text: "Politely decline. Explain that credential sharing violates NHS data governance policy. Offer to contact the IT helpdesk for emergency temporary access or escalate to the ward manager.", correct: true },
+      { text: "Give him the password via a private WhatsApp message so there's no physical record.", correct: false }
+    ],
+    feedback: {
+      good: { title: "✅ Correct Approach!", body: "Credential sharing, even with trusted colleagues, destroys audit trails and violates NHS Acceptable Use Policy and ISO 27001 Access Control (A.9). Under the UK GDPR and NHS Data Security Standard 7, each individual is accountable for actions taken under their credentials. Most NHS Trusts provide emergency access provisioning, using this is the right channel.", ref: "NHS England, 'Data Security & Protection Toolkit', v6.0, 2023. ISO/IEC 27001:2022, Annex A, Control A.9, Access Control." },
+      bad: { title: "⚠️ This Creates Serious Risk", body: "Even with good intent, sharing credentials removes accountability from the audit log. If anything goes wrong, a data breach, a medication error, it becomes impossible to trace who accessed what. This is also a common social engineering vector: attackers impersonate trusted colleagues. The NHS Information Governance framework holds you personally responsible for all actions performed under your login.", ref: "NHS England, Data Security & Protection Toolkit, 2023. ISO/IEC 27001:2022, A.9 Access Control." }
+    }
+  },
+  {
+    id: 3,
+    icon: "📱",
+    tag: "Scenario 3 - Device & Data Security",
+    threat: "Data Loss / BYOD Risk",
+    title: "The Patient Photo",
+    situation: `<strong>09:30 ; Treatment Room.</strong> You're treating a patient with a complex wound. The tissue viability nurse is off-site today but available on WhatsApp. She suggests you photograph the wound on your <strong>personal smartphone</strong> and send it to her for advice — it would save time and help determine the right dressing without waiting for her return.`,
+    question: "What should you do?",
+    choices: [
+      { text: "Take and send the photo via WhatsApp - clinical need overrides policy in this case.", correct: false },
+      { text: "Take the photo on your personal phone but blur out the patient's face before sending.", correct: false },
+      { text: "Decline to use personal devices. Use the hospital's approved secure clinical photography app on an NHS-issued device, or arrange a teleconsultation via the approved NHS Video Consult platform.", correct: true },
+      { text: "Ask the patient if they consent, then send the photo if they say yes.", correct: false }
+    ],
+    feedback: {
+      good: { title: "✅ Right Decision!", body: "Personal devices used for patient data represent an uncontrolled BYOD risk. WhatsApp is not end-to-end encrypted in a way compliant with NHS standards for sensitive data and stores metadata on US servers, violating UK GDPR Article 46 on international data transfers. The ICO has fined NHS organisations for exactly this type of breach. Approved clinical tools (NHS App, Attend Anywhere) exist precisely for this scenario.", ref: "ICO, 'Data Protection in Health and Social Care', 2022. UK GDPR, Article 5(1)(f), Integrity and Confidentiality." },
+      bad: { title: "⚠️ GDPR Breach Risk", body: "Even with patient consent, using an unapproved app on a personal device to transmit identifiable health data violates UK GDPR and the NHS National Data Opt-Out programme. Patient consent does not override the organisation's data security obligations under UK GDPR Article 5. The Information Commissioner's Office has issued fines exceeding £200,000 to NHS bodies for similar incidents .", ref: "ICO, 2022. UK GDPR Articles 5 & 46, Data Security Standard 10." }
+    }
+  },
+  {
+    id: 4,
+    icon: "🖥️",
+    tag: "Scenario 4 - Authentication Fatigue",
+    threat: "Security Fatigue / Workaround Behaviour",
+    title: "The Shared Workstation",
+    situation: `<strong>Night Shift ; 03:00.</strong> You're running five urgent checks. The ward workstation auto-locks every 3 minutes (NHS policy), requiring your smartcard + PIN each time. You've re-authenticated 11 times in 90 minutes. A colleague suggests leaving the session open and covering the screen instead, "Everyone does it on nights."`,
+    question: "How do you address this situation?",
+    choices: [
+      { text: "Agree - the authentication frequency is genuinely excessive and patient safety is more important than IT policy at 3am.", correct: false },
+      { text: "Log out properly each time but raise a formal incident/concern via your Trust's safety reporting system about the usability of the timeout policy.", correct: true },
+      { text: "Compromise: leave the session open for 15 minutes then lock it yourself.", correct: false },
+      { text: "Ask IT to permanently disable the timeout on the night shift machines.", correct: false }
+    ],
+    feedback: {
+      good: { title: "✅ This is the Model Response!", body: "Security fatigue is a well-documented phenomenon (Herley, 2009; Beautement et al., 2008) where excessive security demands lead to deliberate non-compliance. Your frustration is legitimate, research shows overly frequent re-authentication increases errors and reduces compliance. However, the answer is formal escalation, not workarounds. The NHS Patient Safety Reporting system allows staff to flag usability barriers without personal risk. This feeds into the 'security culture' indicators measured by the DSPT.", ref: "Beautement, A. et al. (2008). The compliance budget. NSPW '08. NIST SP 800-50, 'Building an IT Security Awareness Program', 2003." },
+      bad: { title: "⚠️ Understandable, but Risky", body: "Security fatigue is real, but unattended sessions on shared workstations are one of the top insider-threat vectors in hospitals. An unlocked terminal at 3am allows anyone to view or modify patient records, prescribe medications, or exfiltrate data. The correct path is compliance plus escalation: use the NHS incident reporting system to flag the policy as a usability barrier. This is how policies get improved without compromising security.", ref: " Beautement et al., 2008. Herley, C. (2009). So long, and no thanks for the externalities. NSPW '09." }
+    }
+  },
+  {
+    id: 5,
+    icon: "🔒",
+    tag: "Scenario 5 - Ransomware Response",
+    threat: "Ransomware / Incident Response",
+    title: "The Locked Screen",
+    situation: `<strong>11:20 ; Radiology Corridor.</strong> You sit down at a workstation and see an unfamiliar screen: a red banner reads <em>"YOUR FILES HAVE BEEN ENCRYPTED. PAY 2 BTC WITHIN 48 HOURS."</em> The machine is slow. You need access to a patient's scan urgently for a ward round in 10 minutes.`,
+    question: "What is your immediate priority?",
+    choices: [
+      { text: "Try restarting the machine, it might clear the error and you need the scan urgently.", correct: false },
+      { text: "Immediately disconnect the machine from the network (unplug ethernet / disable Wi-Fi), do NOT shut it down, and call the IT Security incident line immediately. Use the paper-based backup procedure for the ward round.", correct: true },
+      { text: "Log in anyway on a different user account to see if you can access the files.", correct: false },
+      { text: "Take a photo of the screen with your phone and email it to IT support.", correct: false }
+    ],
+    feedback: {
+      good: { title: "✅ Perfect Incident Response!", body: "Disconnecting from the network (without shutting down) is the critical first step, it stops ransomware propagating across the RH intranet. Shutdown can destroy forensic evidence. The WannaCry incident spread through NHS networks in minutes because machines remained connected. The NHS Cyber Incident Response Plan mandates network isolation as Step 1. Preserving the machine in its current state helps forensic investigation. Fallback paper procedures must always be available and trained for.", ref: "NCSC & NHS England, 'Cyber Attack Response: Good Practice Guide', 2022. NHS Digital, WannaCry Impact Assessment, 2018." },
+      bad: { title: "⚠️ This Could Make It Much Worse", body: "Restarting or continuing to use the machine can spread ransomware to network shares and other connected devices. In the WannaCry attack (2017), the failure to isolate machines rapidly caused it to propagate to 80 NHS Trusts within hours. Never attempt to log in on an infected machine; every action potentially contributes to data corruption or exfiltration. Network isolation first; everything else second .", ref: "NCSC & NHS England, Cyber Incident Response Guide, 2022. NHS Digital, WannaCry Impact Assessment, 2018." }
+    }
+  },
+  {
+    id: 6,
+    type: "result"
+  }
+];
+
+let currentIdx = 0;
+let score = 0;
+let answered = false;
+const totalQ = scenarios.filter(s => !s.type).length;
+
+function render() {
+  const s = scenarios[currentIdx];
+  const pct = Math.round((currentIdx / (scenarios.length - 1)) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = s.type === 'intro' ? 'Welcome' : s.type === 'result' ? 'Complete' : `Scenario ${currentIdx} of ${totalQ}`;
+  document.getElementById('score-disp').textContent = score;
+
+  if (s.type === 'intro') renderIntro();
+  else if (s.type === 'result') renderResult();
+  else renderScenario(s);
+}
+
+function renderIntro() {
+  document.getElementById('card-container').innerHTML = `
+    <div class="intro">
+      <span class="intro-badge">Royal Hospital * CyberSafe Training Programme For Nurses</span>
+      <h1>Nursing in the<br><em>Digital Threat Landscape</em></h1>
+      <p class="intro-desc">This branching scenario module explores real cybersecurity threats facing NHS nurses. Each scenario presents a realistic situation. Choose wisely, your decisions affect patient safety and data security.</p>
+      <div class="intro-meta">
+        <div class="meta-item"><div class="meta-val">5</div><div class="meta-lbl">Scenarios</div></div>
+        <div class="meta-item"><div class="meta-val">~12</div><div class="meta-lbl">Minutes</div></div>
+        <div class="meta-item"><div class="meta-val">CPD</div><div class="meta-lbl">Accredited</div></div>
+      </div>
+      <div class="briefing-grid">
+        <div class="briefing-cell"><h4>Threats Covered</h4><p>Phishing, credential sharing, BYOD risks, authentication fatigue, ransomware response</p></div>
+        <div class="briefing-cell"><h4>Aligned With</h4><p>NHS DSPT v6.0 * ISO 27001:2022 * NIST SP 800-50 * UK GDPR * NCSC Guidance</p></div>
+        <div class="briefing-cell"><h4>Learning Outcomes</h4><p>Identify social engineering tactics and respond correctly to security incidents</p></div>
+        <div class="briefing-cell"><h4>Completion</h4><p>Pass mark: 60% (3/5). Certificate issued on completion for your NMC portfolio</p></div>
+      </div>
+      <button class="btn-start" onclick="next()">Begin Training -> </button>
+    </div>`;
+}
+
+function renderScenario(s) {
+  answered = false;
+  const choicesHTML = s.choices.map((c, i) => `
+    <button class="choice" id="choice-${i}" onclick="answer(${i}, ${c.correct})">
+      <span class="choice-letter">${String.fromCharCode(65+i)}</span>
+      <span>${c.text}</span>
+    </button>`).join('');
+
+  document.getElementById('card-container').innerHTML = `
+    <div class="card-banner">
+      <div class="scenario-icon">${s.icon}</div>
+      <div>
+        <div class="scenario-tag">${s.tag}</div>
+        <div class="scenario-title">${s.title}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <span class="threat-chip">! Threat: ${s.threat}</span>
+      <div class="situation-box">${s.situation}</div>
+      <div class="question">${s.question}</div>
+      <div class="choices">${choicesHTML}</div>
+      <div class="feedback" id="feedback-box"></div>
+      <button class="btn-next" id="btn-next" onclick="next()">Next Scenario-> </button>
+    </div>`;
+}
+
+function answer(idx, correct) {
+  if (answered) return;
+  answered = true;
+
+  const s = scenarios[currentIdx];
+  const buttons = document.querySelectorAll('.choice');
+  buttons.forEach(b => b.disabled = true);
+
+  const chosen = buttons[idx];
+  if (correct) {
+    chosen.classList.add('correct');
+    score += 20;
+    document.getElementById('score-disp').textContent = score;
+  } else {
+    chosen.classList.add('incorrect');
+    // reveal correct
+    s.choices.forEach((c, i) => { if (c.correct) buttons[i].classList.add('revealed'); });
+  }
+
+  const fb = document.getElementById('feedback-box');
+  const data = correct ? s.feedback.good : s.feedback.bad;
+  fb.className = 'feedback show ' + (correct ? 'good' : 'bad');
+  fb.innerHTML = `<div class="feedback-title">${data.title}</div><p>${data.body}</p><p class="ref">${data.ref}</p>`;
+
+  const btn = document.getElementById('btn-next');
+  btn.className = 'btn-next show';
+  const qNum = scenarios.filter((sc, i) => i < currentIdx && !sc.type).length;
+  btn.textContent = qNum < totalQ - 1 ? 'Next Scenario-> ' : 'See Your Results ->';
+}
+
+function renderResult() {
+  const pct = score;
+  let ringClass = pct >= 60 ? 'pass' : pct >= 40 ? 'mid' : 'fail';
+  let emoji = pct >= 60 ? '🏆' : pct >= 40 ? '📋' : 'U+26a0 ⚠️'; 
+  let title = pct >= 60 ? 'Module Passed' : pct >= 40 ? 'Good Effort' : 'More Practice Needed';
+  let msg = pct >= 60
+    ? `You demonstrated strong security awareness. Your responses reflect the NHS Data Security Standards and would help protect Royal Hospital patients and colleagues from cyber threats.`
+    : pct >= 40
+    ? `You showed understanding in some areas, but there are gaps. Review the feedback from each scenario and consider re-taking the module before your certificate is issued.`
+    : `Cybersecurity is a shared responsibility. The threats covered here are real and current. Please review each scenario's feedback carefully and discuss with your Information Governance lead.`;
+
+  document.getElementById('card-container').innerHTML = `
+    <div class="result-screen">
+      <div class="result-ring ${ringClass}">${emoji}</div>
+      <div class="result-title">${title}</div>
+      <div class="result-score">${score}%</div>
+      <p class="result-msg">${msg}</p>
+      <div class="result-tips">
+        <h3>🔐 Key Takeaways for Daily Practice</h3>
+        <div class="tip-row"><span class="tip-icon">📧</span><span><strong>Phishing:</strong> Urgency + authority cues = red flags. Always verify through official channels before acting.</span></div>
+        <div class="tip-row"><span class="tip-icon">🔑</span><span><strong>Credentials:</strong> Your login is your digital signature. Sharing it removes accountability and violates NHS IG policy.</span></div>
+        <div class="tip-row"><span class="tip-icon">📱</span><span><strong>Devices:</strong> Never use personal devices for patient data. Approved NHS tools exist for every clinical communication need.</span></div>
+        <div class="tip-row"><span class="tip-icon">😓</span><span><strong>Fatigue:</strong> If security controls are too burdensome, report it formally; workarounds are never the answer.</span></div>
+        <div class="tip-row"><span class="tip-icon">🚨</span><span><strong>Incidents:</strong> Isolate → Report → Document. Never restart an infected machine. Know your Trust's incident line.</span></div>
+      </div>
+      <br>
+      <button class="btn-restart" onclick="restart()">↺ Retake Module</button>
+    </div>`;
+}
+
+function next() {
+  currentIdx++;
+  render();
+}
+
+function restart() {
+  currentIdx = 0;
+  score = 0;
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
